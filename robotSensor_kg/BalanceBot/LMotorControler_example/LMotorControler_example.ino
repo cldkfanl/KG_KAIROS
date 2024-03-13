@@ -3,12 +3,12 @@
 #define MIN_ABS_SPEED 20
 
 //MOTOR CONTROLLER
-int ENA = 3;
-int IN1 = 4;
-int IN2 = 5;
-int IN3 = 7;
-int IN4 = 8;
-int ENB = 9;
+int ENA = 5;
+int IN1 = 6;
+int IN2 = 7;
+int IN3 = 8;
+int IN4 = 9;
+int ENB = 10;
 
 LMotorController motorController(ENA, IN1, IN2, ENB, IN3, IN4, 1, 1);
 

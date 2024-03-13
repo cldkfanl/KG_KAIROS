@@ -331,8 +331,14 @@ class RobotArmControl:
                     # 시리얼 포트로부터 데이터 읽기
                     received_data = self.ser.readline().decode('utf-8').strip()
                     if received_data and received_data.endswith("d"):
-                        values = received_data.rstrip("d")
-                        self.update_received_label(values + " 받았습니다.")
+                        values = received_data.rstrip("d").split(",")
+                        if len(values) == 4:
+                            # save_position 함수에 값을 전달하여 저장
+                            position = ", ".join(values)
+                            self.saved_positions.append(position)
+                            self.position_combobox['values'] = self.saved_positions
+                            self.label.config(text="")  # 라벨 텍스트 지우기
+                            self.update_received_label(position + " 받았습니다.")
                 except serial.serialutil.SerialException as e:
                     print("시리얼 데이터 읽기 오류:", e)
             time.sleep(0.1)  # 필요에 따라 슬립 시간 조정

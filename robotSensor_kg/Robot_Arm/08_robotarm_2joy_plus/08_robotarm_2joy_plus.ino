@@ -65,6 +65,7 @@ void setup() {
   pinMode(PIN_JOINT_JOYSTICK_MODE, INPUT_PULLUP);
   pinMode(PIN_MODE_LED, OUTPUT);
   pinMode(PIN_SEND_SER, OUTPUT);
+  pinMode(PIN_SEND_SER, INPUT_PULLUP);
 
   attachInterrupt(INT0, ISRJoystickMode, LOW);
 
@@ -111,7 +112,24 @@ void checkJoystickMove() {
     done = 0;
   }
 }
+void checkSendSerButton() {
+  static int prevButtonState = HIGH; // Initialize previous button state
+  int buttonState = digitalRead(PIN_SEND_SER);
 
+  // Check if the button state has changed from HIGH to LOW (pressed)
+  if (buttonState == LOW && prevButtonState == HIGH) {
+    // Your button action here
+    baseAngle = base.read();
+    shoulderAngle = shoulder.read();
+    upperarmAngle = upperarm.read();
+    forearmAngle = forearm.read();
+    String tmp = String(baseAngle) + "," + String(shoulderAngle) + "," + String(upperarmAngle) + "," + String(forearmAngle) + "d";
+    Serial.println(tmp);
+  }
+
+  // Update the previous button state
+  prevButtonState = buttonState;
+}
 
 void checkJointReadButton() {
   if (digitalRead(PIN_JOINT_READ_BUTTON) == LOW) {
@@ -150,7 +168,7 @@ void displayOLED() {
   display.println(shoulderStr);
   display.println(upperarmStr);
   display.println(forearmStr);
-  display.println("\n"); // OLED 에 마지막 줄이 안 보여서 넣어준 것임
+  display.println("\n");  // OLED 에 마지막 줄이 안 보여서 넣어준 것임
 
   display.setCursor(0, 0);  // Start at top-left corner
   display.display();
@@ -180,6 +198,7 @@ void moveJoints() {
 void loop() {
   checkJoystickMove();
   checkJointReadButton();
+  checkSendSerButton();
 
   if (Serial.available() > 0) {
     //10,20,30,40d
@@ -197,7 +216,7 @@ void loop() {
     }
 
     displayOLED();
-    done = 0; //하나의 작업이 시작되어, 끝나지 않았음을 의미
+    done = 0;  //하나의 작업이 시작되어, 끝나지 않았음을 의미
   }
   moveJoints();
   // delay(100);
