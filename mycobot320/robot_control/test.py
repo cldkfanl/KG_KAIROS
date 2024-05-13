@@ -1,27 +1,14 @@
-from pymycobot.mycobot import MyCobot
+from pymycobot import MyCobotSocket
 import time
-mc = MyCobot('COM3',115200)
-mc.send_angles([0,0,0,0,0,0],20)
-mc.set_gripper_mode(0)
-mc.init_eletric_gripper()
-time.sleep(5)
-while True:
-  mc.set_eletric_gripper(1)
-  mc.set_gripper_value(100,20)
-  time.sleep(2)
-  mc.send_angles([70,20,67,(-10),(-86),(-28)],20)
-  time.sleep(7)
-  mc.set_eletric_gripper(0)
-  mc.set_gripper_value(5,20)
-  time.sleep(3)
-  mc.send_angles([70,10,57,(-20),(-86),(-28)],20)
-  time.sleep(2)
-  mc.send_angles([120,10,57,(-20),(-86),(-28)],20)
-  time.sleep(2)
-  mc.send_angles([120,20,67,(-10),(-86),(-28)],20)
-  time.sleep(5)
-  mc.set_eletric_gripper(1)
-  mc.set_gripper_value(100,20)
-  time.sleep(2)
-  mc.send_angles([10,10,10,10,10,10],20)
-  time.sleep(2)
+
+# Use port 9000 by default
+# Where "192.168.10.22" is the IP of the robot arm
+
+mc = MyCobotSocket("192.168.137.249",9000)
+
+
+time.sleep(1)
+# #After the connections is normal, the robot arm can be controlled.
+# res = mc.get_angles()
+# print(res)
+mc.send_angles([10,10,10,10,10,10],10)

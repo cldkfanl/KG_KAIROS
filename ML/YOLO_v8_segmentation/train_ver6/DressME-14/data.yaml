@@ -1,0 +1,20 @@
+names:
+- Black-Skirt
+- Black-Tshirts
+- Blue-Pants
+- Grey-Pants
+- Pink-Shorts
+- Pink-Tshirts
+- Red-Shirt
+- Red-Shorts
+- White-Shirt
+nc: 9
+roboflow:
+  license: CC BY 4.0
+  project: dressme-vqjil
+  url: https://universe.roboflow.com/project3-edyhb/dressme-vqjil/dataset/14
+  version: 14
+  workspace: project3-edyhb
+test: C:/Users/user/Desktop/KG_kairos/ML/YOLO_v8_segmentation/train_ver6/DressME-14/test
+train: C:/Users/user/Desktop/KG_kairos/ML/YOLO_v8_segmentation/train_ver6/DressME-14/train
+val: C:/Users/user/Desktop/KG_kairos/ML/YOLO_v8_segmentation/train_ver6/DressME-14/valid
